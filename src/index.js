@@ -47,11 +47,11 @@ function decode(expr) {
     let i= stringLength/10;
     let k=1;
     while (i-- > 0) {
-        currentCode = expr.substr((stringLength-i-1)*10, 10);
+        currentCode = expr.substr((stringLength/10-i-1)*10, 10);
         currentSign = currentCode.substr(8,2);
-        while (currentSign != '00' && currentSign != '**' ) 
+        while (currentSign != '00' && currentSign != '**' && k!=6) 
         {
-            if (currentSign = '11') {
+            if (currentSign == '11') {
                 currentLetter = '-' + currentLetter ;
             } else {
                 currentLetter = '.' + currentLetter ;
@@ -59,8 +59,12 @@ function decode(expr) {
             ++k;
             currentSign = currentCode.substr(10-2*k,2);
         };
-        decodedString += MORSE_TABLE [currentLetter];
-        if (currentSign ='**') {decodedString += ' '};
+        
+        if (currentSign =='**') {
+            decodedString += ' ';
+        } else {
+            decodedString += MORSE_TABLE[currentLetter];
+        }
         currentSign ='';
         currentLetter = '';
         k=1;
